@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class RentACatImpl implements RentACat {
 
 	private ArrayList<Cat> cats = new ArrayList<Cat>();
-
 	/**
 	 * Return a cat. This should call the .returnCat() method on the cat for the
 	 * passed-in cat id. If the cat with the id exists in the list of cats and has
@@ -16,9 +15,17 @@ public class RentACatImpl implements RentACat {
 	 * @param id the ID of the cat to rent
 	 * @return true if cat exists and was rented out, false otherwise
 	 */
-
+		//
 	public boolean returnCat(int id) {
 		// TODO: Fill in
+		for (Cat cat : cats) {
+			if (cat.getId() == id && cat.getRented()) {
+				cat.returnCat();
+				System.out.println("Welcome back, " + cat.getName() + "!");
+				return true;
+			}
+		}
+		System.out.println(getCat(id).getName() + " is already here!");
 		return false;
 	}
 
@@ -34,6 +41,15 @@ public class RentACatImpl implements RentACat {
 
 	public boolean rentCat(int id) {
 		// TODO: Fill in
+		for (Cat cat : cats) {
+			if (cat.getId() == id && cat.getRented() == false) {
+				cat.rentCat();
+				System.out.println(cat.getName() + " has been rented.");
+				return true;
+			}
+		}
+		
+		System.out.println("Sorry, " + getCat(id).getName() + " is not here!");
 		return false;
 	}
 
@@ -48,6 +64,13 @@ public class RentACatImpl implements RentACat {
 
 	public boolean renameCat(int id, String name) {
 		// TODO: Fill in
+		for (Cat cat : cats) {
+			if (cat.getId() == id) {
+				cat.renameCat(name);
+				return true;
+			}
+		}
+		System.out.println("Invalid cat ID.");
 		return false;
 	}
 
@@ -63,7 +86,15 @@ public class RentACatImpl implements RentACat {
 
 	public String listCats() {
 		// TODO: Fill in
-		return "WRITE CODE FOR THIS";
+		StringBuilder s = new StringBuilder();
+
+		for (Cat cat : cats) {
+			if (!cat.getRented()) {
+				s.append(cat.toString());
+				s.append("\n");
+			}
+		}
+		return s.toString();
 	}
 
 	/**
@@ -95,7 +126,6 @@ public class RentACatImpl implements RentACat {
 		// ID, then the cat is not in the list
 		System.out.println("Invalid cat ID.");
 		return null;
-
 	}
 
 	/**
