@@ -51,8 +51,8 @@ jobs:
         key: cached-build-${{github.sha}}
         path: .
   build:
-    name: Build and analyze
     needs: [maven_test]
+    name: Build and analyze
     runs-on: ubuntu-latest
     steps:
       - name: Restore cached build
